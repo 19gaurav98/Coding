@@ -1,86 +1,68 @@
-class BinarySearchTree {
+import java.util.*;
+import java.io.*;
  
-    /* Class containing left
-       and right child of current node
-     * and key value*/
-    class Node {
-        int key;
-        Node left, right;
- 
-        public Node(int item)
-        {
-            key = item;
-            left = right = null;
-        }
-    }
- 
-    // Root of BST
-    Node root;
- 
-    // Constructor
-    BinarySearchTree() { root = null; }
- 
-    BinarySearchTree(int value) { root = new Node(value); }
- 
-    // This method mainly calls insertRec()
-    void insert(int key) { root = insertRec(root, key); }
- 
-    /* A recursive function to
-       insert a new key in BST */
-    Node insertRec(Node root, int key)
-    {
- 
-        /* If the tree is empty,
-           return a new node */
-        if (root == null) {
-            root = new Node(key);
-            return root;
-        }
- 
-        /* Otherwise, recur down the tree */
-        if (key < root.key)
-            root.left = insertRec(root.left, key);
-        else if (key > root.key)
-            root.right = insertRec(root.right, key);
- 
-        /* return the (unchanged) node pointer */
-        return root;
-    }
- 
-    // This method mainly calls InorderRec()
-    void inorder() { inorderRec(root); }
- 
-    // A utility function to
-    // do inorder traversal of BST
-    void inorderRec(Node root)
-    {
-        if (root != null) {
-            inorderRec(root.left);
-            System.out.println(root.key);
-            inorderRec(root.right);
-        }
-    }
- 
-    // Driver Code
-    public static void main(String[] args)
-    {
-        BinarySearchTree tree = new BinarySearchTree();
- 
-        /* Let us create following BST
-              50
-           /     \
-          30      70
-         /  \    /  \
-       20   40  60   80 */
-        tree.insert(50);
+class GFG {
+    public static void main (String[] args) {
+         BST tree=new BST();
         tree.insert(30);
+        tree.insert(50);
+        tree.insert(15);
         tree.insert(20);
+        tree.insert(10);
         tree.insert(40);
-        tree.insert(70);
         tree.insert(60);
-        tree.insert(80);
- 
-        // print inorder traversal of the BST
         tree.inorder();
+    }
+}
+ 
+class Node{
+    Node left;
+    int val;
+    Node right;
+    Node(int val){
+        this.val=val;
+    }
+}
+ 
+class BST{
+  Node root;
+   
+  public void insert(int key){
+        Node node=new Node(key);
+        if(root==null) {
+            root = node;
+            return;
+        }
+        Node prev=null;
+        Node temp=root;
+        while (temp!=null){
+            if(temp.val>key){
+                prev=temp;
+                temp=temp.left;
+            }
+            else if (temp.val<key){
+                prev=temp;
+                temp=temp.right;
+            }
+        }
+        if(prev.val>key)
+            prev.left=node;
+        else prev.right=node;
+    }
+   
+   public void inorder(){
+        Node temp=root;
+        Stack<Node> stack=new Stack<>();
+        while (temp!=null||!stack.isEmpty()){
+            if(temp!=null){
+                stack.add(temp);
+                temp=temp.left;
+            }
+            else {
+                temp=stack.pop();
+                System.out.print(temp.val+" ");
+                temp=temp.right;
+            }
+        }
     }
 }
