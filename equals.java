@@ -8,3 +8,7 @@ public boolean equals(Object o) {
       || (this.currencyCode != null && this.currencyCode.equals(other.currencyCode));
     return this.amount == other.amount && currencyCodeEquals;
 }
+
+public int hashCode() {
+    return Objects.hashCode(this.firstName, this.lastName);
+}
